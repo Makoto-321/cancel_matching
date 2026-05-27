@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>飲食店キャンセルマッチング</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Zen+Kaku+Gothic+New:wght@300;400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream:   #fdf8f2;
+      --ink:     #1a1209;
+      --warm:    #c8783a;
+      --warm-lt: #e8a96a;
+      --warm-dk: #8b4a1e;
+      --muted:   #6b5640;
+      --card-bg: #fffcf8;
+      --border:  #e8d9c5;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--cream);
+      color: var(--ink);
+      font-family: 'Zen Kaku Gothic New', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── texture overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='none'/%3E%3Ccircle cx='1' cy='1' r='0.6' fill='%23c8783a' opacity='0.07'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── decorative top stripe ── */
+    .top-stripe {
+      height: 5px;
+      background: linear-gradient(90deg, var(--warm-dk), var(--warm), var(--warm-lt), var(--warm), var(--warm-dk));
+    }
+
+    /* ── hero ── */
+    .hero {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 72px 24px 56px;
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.28em;
+      color: var(--warm);
+      border-top: 1px solid var(--warm);
+      border-bottom: 1px solid var(--warm);
+      padding: 5px 16px;
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.1s ease forwards;
+    }
+
+    .hero-title {
+      font-family: 'Noto Serif JP', serif;
+      font-weight: 900;
+      font-size: clamp(2rem, 6vw, 3.8rem);
+      line-height: 1.2;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+      opacity: 0;
+      animation: fadeUp 0.7s 0.25s ease forwards;
+    }
+
+    .hero-title em {
+      font-style: normal;
+      color: var(--warm);
+    }
+
+    .hero-divider {
+      width: 56px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--warm), var(--warm-lt));
+      margin: 28px auto;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.4s ease forwards;
+    }
+
+    .hero-desc {
+      max-width: 580px;
+      margin: 0 auto;
+      font-size: clamp(0.95rem, 2.2vw, 1.1rem);
+      line-height: 1.85;
+      color: var(--muted);
+      font-weight: 300;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.5s ease forwards;
+    }
+
+    /* ── cards section ── */
+    .cards-section {
+      position: relative;
+      z-index: 1;
+      padding: 8px 24px 80px;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 600px) {
+      .cards-grid { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 44px 36px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 20px;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      box-shadow: 0 2px 16px rgba(200, 120, 58, 0.07);
+    }
+
+    .card:nth-child(1) { animation: fadeUp 0.65s 0.65s ease forwards; }
+    .card:nth-child(2) { animation: fadeUp 0.65s 0.8s ease forwards; }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--warm-dk), var(--warm-lt));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(200, 120, 58, 0.16);
+    }
+
+    .card:hover::before { transform: scaleX(1); }
+
+    .card-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #fdefd8, #f8d8b0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.7rem;
+      flex-shrink: 0;
+    }
+
+    .card-label {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.24em;
+      color: var(--warm);
+      font-weight: 400;
+    }
+
+    .card-heading {
+      font-family: 'Noto Serif JP', serif;
+      font-size: clamp(1rem, 2.6vw, 1.22rem);
+      font-weight: 700;
+      line-height: 1.5;
+      color: var(--ink);
+    }
+
+    .card-body {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.75;
+      font-weight: 300;
+    }
+
+    .card-btn {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 14px 32px;
+      background: linear-gradient(135deg, var(--warm-dk), var(--warm));
+      color: #fff;
+      font-family: 'Zen Kaku Gothic New', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      border-radius: 50px;
+      transition: opacity 0.25s, transform 0.25s;
+      box-shadow: 0 4px 16px rgba(139, 74, 30, 0.3);
+    }
+
+    .card-btn:hover {
+      opacity: 0.88;
+      transform: scale(1.04);
+    }
+
+    /* ── footer ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 28px 24px 36px;
+      font-size: 0.75rem;
+      color: var(--border);
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── animation ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-stripe"></div>
+
+  <section class="hero">
+    <p class="hero-eyebrow">CANCEL MATCHING SERVICE</p>
+    <h1 class="hero-title">飲食店<em>キャンセル</em><br>マッチングサイト</h1>
+    <div class="hero-divider"></div>
+    <p class="hero-desc">
+      やむを得ず飲食店の予約をキャンセルする方と、<br>
+      そのお店をぜひ利用したい方をつなぐマッチングサービスです。<br>
+      大切な予約枠を、必要としている方へ。
+    </p>
+  </section>
+
+  <section class="cards-section">
+    <div class="cards-grid">
+
+      <!-- キャンセルしたい方 -->
+      <div class="card">
+        <div class="card-icon">📋</div>
+        <p class="card-label">FOR CANCELLATION</p>
+        <h2 class="card-heading">予約をキャンセル<br>したい方へ</h2>
+        <p class="card-body">急なご都合でキャンセルが必要になった方、予約枠を必要な方へ譲りませんか。フォームから簡単にご登録いただけます。</p>
+        <a class="card-btn"
+           href="https://docs.google.com/forms/d/e/1FAIpQLSctSqlNk1zbrnV2AE8VMon-iHEKTlyXuyoufZASh1jVc2-2xQ/viewform?usp=header"
+           target="_blank" rel="noopener">
+          キャンセルしたい方はこちらをクリック
+        </a>
+      </div>
+
+      <!-- 空き枠を見つけたい方 -->
+      <div class="card">
+        <div class="card-icon">🍽️</div>
+        <p class="card-label">FOR RESERVATION</p>
+        <h2 class="card-heading">空き枠を見つけたい<br>方へ</h2>
+        <p class="card-body">行きたかったお店の空き枠を探している方、ぜひご登録ください。マッチングが成立した際にご連絡いたします。</p>
+        <a class="card-btn"
+           href="https://docs.google.com/forms/d/e/1FAIpQLSdWq9Tsbs2s1eEfdmfeK2uLLy8853cTU5evZzSi6a0gxJO6SQ/viewform?usp=header"
+           target="_blank" rel="noopener">
+          空き枠を見つけたい方はこちらをクリック
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 飲食店キャンセルマッチングサイト
+  </footer>
+
+</body>
+</html>
