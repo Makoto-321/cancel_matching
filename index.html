@@ -1,9 +1,17 @@
-
+<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>飲食店キャンセルマッチング</title>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GRZSKJ5QXB"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-GRZSKJ5QXB');
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Zen+Kaku+Gothic+New:wght@300;400;700&display=swap" rel="stylesheet" />
@@ -262,7 +270,8 @@
         <p class="card-body">急なご都合でキャンセルが必要になった方、予約枠を必要な方へ譲りませんか。フォームから簡単にご登録いただけます。</p>
         <a class="card-btn"
            href="https://docs.google.com/forms/d/e/1FAIpQLSctSqlNk1zbrnV2AE8VMon-iHEKTlyXuyoufZASh1jVc2-2xQ/viewform?usp=header"
-           target="_blank" rel="noopener">
+           target="_blank" rel="noopener"
+           onclick="gtag('event', 'click', {event_category: 'button', event_label: 'cancel'});">
           キャンセルしたい方はこちらをクリック
         </a>
       </div>
@@ -275,7 +284,8 @@
         <p class="card-body">行きたかったお店の空き枠を探している方、ぜひご登録ください。マッチングが成立した際にご連絡いたします。</p>
         <a class="card-btn"
            href="https://docs.google.com/forms/d/e/1FAIpQLSdWq9Tsbs2s1eEfdmfeK2uLLy8853cTU5evZzSi6a0gxJO6SQ/viewform?usp=header"
-           target="_blank" rel="noopener">
+           target="_blank" rel="noopener"
+           onclick="gtag('event', 'click', {event_category: 'button', event_label: 'vacancy'});">
           空き枠を見つけたい方はこちらをクリック
         </a>
       </div>
