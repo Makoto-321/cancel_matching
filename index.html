@@ -237,6 +237,89 @@
       border-top: 1px solid var(--border);
     }
 
+    /* ── flow section ── */
+    .flow-section {
+      position: relative;
+      z-index: 1;
+      padding: 0 24px 80px;
+    }
+
+    .flow-title {
+      text-align: center;
+      font-family: 'Noto Serif JP', serif;
+      font-size: clamp(1.1rem, 3vw, 1.5rem);
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 40px;
+      letter-spacing: 0.1em;
+    }
+
+    .flow-title::after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--warm), var(--warm-lt));
+      margin: 12px auto 0;
+    }
+
+    .flow-steps {
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      gap: 0;
+      max-width: 900px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+
+    .flow-step {
+      flex: 1;
+      min-width: 160px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 20px;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 2px 12px rgba(200, 120, 58, 0.06);
+    }
+
+    .flow-step-num {
+      display: inline-block;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--warm-dk), var(--warm));
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      line-height: 28px;
+      margin-bottom: 12px;
+    }
+
+    .flow-step-text {
+      font-size: 0.85rem;
+      line-height: 1.7;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    .flow-arrow {
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+      color: var(--warm);
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 640px) {
+      .flow-steps { flex-direction: column; align-items: center; }
+      .flow-step { width: 100%; max-width: 320px; }
+      .flow-arrow { transform: rotate(90deg); padding: 4px 0; }
+    }
+
     /* ── animation ── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
@@ -290,6 +373,31 @@
         </a>
       </div>
 
+    </div>
+  </section>
+
+  <section class="flow-section">
+    <h2 class="flow-title">ご利用の流れ</h2>
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="flow-step-num">1</div>
+        <p class="flow-step-text">キャンセルしたい予約枠と行きたいお店を、予約をキャンセルしたい方/空き枠を見つけたい方それぞれに登録</p>
+      </div>
+      <div class="flow-arrow">＞</div>
+      <div class="flow-step">
+        <div class="flow-step-num">2</div>
+        <p class="flow-step-text">キャンセル希望枠と空き希望枠が一致したら、弊社からそれぞれご連絡 </p>
+      </div>
+      <div class="flow-arrow">＞</div>
+      <div class="flow-step">
+        <div class="flow-step-num">3</div>
+        <p class="flow-step-text">弊社仲介で合言葉を決め、予約キャンセルと新規予約をお客様からお店に連絡</p>
+      </div>
+      <div class="flow-arrow">＞</div>
+      <div class="flow-step">
+        <div class="flow-step-num">4</div>
+        <p class="flow-step-text">予約枠の譲渡完了</p>
+      </div>
     </div>
   </section>
 
